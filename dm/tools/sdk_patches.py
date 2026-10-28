@@ -5,12 +5,18 @@ CUTS = {
   # (0xc9400000) in nninitStartup. The original 1 GB node area plus the next
   # 1 GB-aligned region does not fit the 4.375 GB alias region (0x1803).
   # Shrinking both node-area bounds reaches nnMain. Large-region alignment
-  # at 32 MB also avoids wasting the alias prefix: with 1 GB alignment the
+  # also avoids wasting the alias prefix: with 1 GB alignment the
   # first asset load runs out of regions at +4.26 GB with only 0.75 GB mapped.
+  # Scene transitions also exhaust the remaining space: Unity's N MB + 252 KB
+  # reservations cross the old size classes (179 live regions reserve 3.09 GB
+  # but end at alias +4.22 GB). Use SDK 20's 2 MB alignment for all classes
+  # from 4 MB up, as for Sea of Stars, rather than only shrinking the 1 GB class.
   '2587a39ac2547a780ec0e4b77e22afab': [
     (0x12d8b0, '08fca752', '087ca052', 'AddressRegionManager node area limit: 1 GB to 62 MB'),
     (0x12d94c, '09fca752', '097ca052', 'AddressRegionManager occupied node area: 1 GB to 62 MB'),
-    (0x12daac, '0a00a852', '0a40a052', 'AllocateAddressRegion: align regions of 1 GB and more to 32 MB'),
+    (0x12daa4, '0b40a052', '0b04a052', 'AllocateAddressRegion: align regions from 32 MB to 1 GB to 2 MB (as SDK 20)'),
+    (0x12daac, '0a00a852', '0a04a052', 'AllocateAddressRegion: align regions of 1 GB and more to 2 MB (as SDK 20)'),
+    (0x12dab0, '0808a052', '0804a052', 'AllocateAddressRegion: align regions from 4 MB to 32 MB to 2 MB (as SDK 20)'),
   ],
   # Kingdom Battle 1.9.589692, SDK 4.4.0: the older VammManager reserves a
   # full 1 GB node area (constructor +0x93dd8, occupied range +0x93e98).

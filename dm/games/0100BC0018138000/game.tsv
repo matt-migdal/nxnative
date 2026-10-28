@@ -1,4 +1,4 @@
-# Super Mario RPG 1.0.1: title/opening cinematic tested on NX2Apple; upstream runtime validation pending.
+# Super Mario RPG 1.0.1: first Keep return tested on NX2Apple; upstream/iOS validation pending.
 title_id	0100BC0018138000
 program_id	0100BC0018138000
 name	Super Mario RPG
@@ -14,6 +14,6 @@ mem_reserve	0x140000000
 mem_alias	0x118000000
 mem_stack	0x10000000
 # StandardAllocator reserves pool - used; leave address space for Unity pools.
-app_pool	0x80000000
+app_pool	0x60000000
 mem_used	0x4000000
 sys_resource	0x1000000
